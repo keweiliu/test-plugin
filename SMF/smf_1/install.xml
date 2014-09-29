@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>TapatalkSMFPlugin:TapatalkDevelopmentTeam</id>
+	<file name="$sourcedir/Load.php">
+		<operation>
+			<search position="after"><![CDATA[	$context['menu_separator'] = !empty($settings['use_image_buttons']) ? ' ' : ' | ';]]></search>
+			<add><![CDATA[	include_once($GLOBALS['boarddir'].'/mobiquo/smartbanner.php');
+]]></add>
+        </operation>
+	</file>
+	<file name="$sourcedir/Recent.php">
+		<operation>
+			<search position="before"><![CDATA[$context['topics_to_mark'] = implode('-', $topic_ids);]]></search>
+			<add><![CDATA[
+	$context['num_topics'] = $num_topics;]]></add>
+		</operation>
+	</file>
+	<file name="$sourcedir/Subs.php" error="skip">
+		<operation error="ignore">
+			<search position="replace"><![CDATA[function parse_bbc($message, $smileys = true, $cache_id = '')]]></search>
+			<add><![CDATA[function parse_bbc($message, $smileys = true, $cache_id = '', $parse_tags = array())]]></add>
+		</operation>
+		<operation error="ignore">
+			<search position="replace"><![CDATA[		foreach ($codes as $c)
+			$bbc_codes[substr($c['tag'], 0, 1)][] = $c;]]></search>
+			<add><![CDATA[		foreach ($codes as $code)
+		{
+			// If we are not doing every tag only do ones we are interested in.
+			if (empty($parse_tags) || in_array($code['tag'], $parse_tags))
+				$bbc_codes[substr($code['tag'], 0, 1)][] = $code;
+		}]]></add>
+		</operation>
+		<operation error="ignore">
+			<search position="replace"><![CDATA[if (empty($bbc_codes) || $message === false)]]></search>
+			<add><![CDATA[	if (!empty($parse_tags) && !empty($bbc_codes))
+		$bbc_codes = array();
+
+	// Sift out the bbc for a performance improvement.
+	if (empty($bbc_codes) || $message === false || !empty($parse_tags))]]></add>
+		</operation>
+	</file>
+	<file name="$sourcedir/PersonalMessage.php" error="skip">
+		<operation error="ignore">
+			<search position="replace"><![CDATA[	if (!empty($context['send_log']['failed']))]]></search>
+			<add><![CDATA[	//Tapatalk pm push - start
+	global $boarddir;
+	if (function_exists('tapatalk_push_pm'))
+		tapatalk_push_pm();
+	else if(file_exists($boarddir . '/mobiquo/push_hook.php'))
+	{
+		include($boarddir . '/mobiquo/push_hook.php');
+		tapatalk_push_pm();
+	}
+	
+	if (defined('IN_MOBIQUO')) return;
+	//Tapatalk pm push - end
+	
+	if (!empty($context['send_log']['failed']))]]></add>
+		</operation>
+	</file>
+	<file name="$sourcedir/Post.php" error="skip">
+		<operation error="ignore">
+			<search position="replace"><![CDATA[		$context['post_error'] = array('messages' => array());]]></search>
+			<add><![CDATA[		// return error to Tapatalk
+		if (defined('IN_MOBIQUO'))
+		{
+			get_error($txt['error_' . $post_errors[0]]);
+		}
+
+		$context['post_error'] = array('messages' => array());]]></add>
+		</operation>
+		<operation error="ignore">
+			<search position="replace"><![CDATA[	// Notify any members who have notification turned on for this topic.]]></search>
+			<add><![CDATA[	// Tapatalk post push
+	global $boarddir;
+	include_once($boarddir . '/mobiquo/push_hook.php');
+	tapatalk_push_post($msgOptions['id'], $newTopic);
+
+	// Notify any members who have notification turned on for this topic.]]></add>
+		</operation>
+		<operation error="ignore">
+			<search position="replace"><![CDATA[	if (!empty($_POST['announce_topic']))]]></search>
+			<add><![CDATA[	// Return to Tapatalk
+	if (defined('IN_MOBIQUO')) return $newTopic ? $topicOptions['id'] : $msgOptions['id'];
+
+	if (!empty($_POST['announce_topic']))]]></add>
+		</operation>
+	</file>
+	<file name="$sourcedir/Register.php" error="skip">
+		<operation error="ignore">
+			<search position="replace"><![CDATA[	$memberID = registerMember($regOptions);]]></search>
+			<add><![CDATA[	$memberID = registerMember($regOptions);
+	
+	// return to Tapatalk
+	if (defined('IN_MOBIQUO')) return $memberID;]]></add>
+		</operation>
+	</file>
+	<file name="$sourcedir/Errors.php" error="skip">
+		<operation error="ignore">
+			<search position="replace"><![CDATA[function fatal_error($error, $log = true)
+{]]></search>
+			<add><![CDATA[function fatal_error($error, $log = true)
+{
+	// return to Tapatalk
+	if (defined('IN_MOBIQUO')) get_error($error);
+	]]></add>
+		</operation>
+	</file>
+	<file name="$themedir/index.template.php">
+        <operation error="ignore">
+            <search position="replace"><![CDATA[</head>
+<body>';]]></search>
+            <add><![CDATA[</head>
+<body>'.$context['tapatalk_body_hook'];]]></add>
+        </operation>
+    </file>
+</modification>

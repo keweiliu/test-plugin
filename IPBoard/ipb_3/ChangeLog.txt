@@ -1,0 +1,14 @@
+IPBoard 3.0/3.1/3.2/3.3 Series ,Plugin Version 3.3.3 Released:
+1.fix multi-word search issue;
+2.improve detect js;
+3.fixed bug:no new content since used tapatalk;
+4.fixed bug:can not reply post and quote post in ipb 3.1.4 version;
+
+
+Important Note:
+1.You must uninstall the old tapatalk hook in backend Applications & Modules > Manage Hooks page,and then install the new tapatalk hook into your site,and use the new mobiquo folder to replace the old mobiquo folder;
+
+Supprot Forum:
+http://support.tapatalk.com/forums/ipboard-discussion.56/
+
+2013-03-22

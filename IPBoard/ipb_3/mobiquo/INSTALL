@@ -1,0 +1,28 @@
+
+Tapatalk Mod for IPBoard 3.3- Installation
+
+Installation for IPBoard v3.0
+
+1. Place the zip package at the root of your forum system.
+2. Unzip the package. You should see a directory called "mobiquo" inside your forum system root directory. 
+   For example, if your forum URL is http://www.mysite.com/forum, it should be placed at http://www.mysite.com/forum/mobiquo/.
+3. Login to Administration Control Panel and follow below steps by your system version
+
+Extra Installation steps for IPBoard v3.1/2/3 only
+
+4. Switch to 'System' -> 'Applications & Modules' -> 'Manage Hooks' in AdminCP
+5. Click 'Install Hook' and import the 'tapatalk.xml' file inside the mobiquo directory
+6. Installation was done here and you should be able to find the tapatalk settings in 'System Settings'
+7. Only IPBoard system v3.1 or above system with tapatalk hook installed support Push Notification in app
+
+Special Instruction for Branded Customer
+ - By default the Plugin will notify mobile users to download Tapatalk app.
+   If you have purchased the branded license from us and wish to send mobile user to your mobile app,
+   please follow the instruction to config the 'Tapatalk BYO Settings' in your forum ACP.
+
+
+More actions you may need to do
+ - Go back to Tapatalk forum owner area to complete your forum register in tapatalk network.
+ - Verify the mod installation in tapatalk forum owner area and publish your fourm, after that app users can find and visit your forum in Tapatalk App.
+
+For more information, please check here: https://tapatalk.com/activate_tapatalk.php?plugin=ipb

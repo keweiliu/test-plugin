@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+    <id>TapatalkSMFPlugin:TapatalkDevelopmentTeam</id>
+    <file name="$sourcedir/Load.php">
+        <operation>
+            <search position="after"><![CDATA[	$context['menu_separator'] = !empty($settings['use_image_buttons']) ? ' ' : ' | ';]]></search>
+            <add><![CDATA[	$context['html_headers'] .= '<script type="text/javascript" language="JavaScript" src="' . $boardurl . '/mobiquo/tapatalkdetect.js"></script>';
+]]></add>
+        </operation>
+    </file>
+</modification>

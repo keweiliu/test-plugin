@@ -1,0 +1,39 @@
+api_level = 3
+version = ip30_3.4.1
+is_open = 1
+reg_url = index.php?app=core&module=global&section=register
+
+// If your forum have mod 'Hide Posts From Guests' installed, please turn on this field and set it to be 1
+hide_posts_from_guests = 0
+
+disable_search = 0
+disable_latest = 0
+disable_bbcode = 0
+
+report_post = 1
+mark_forum = 1
+goto_unread = 1
+goto_post = 1
+get_latest_topic = 1
+get_id_by_url = 1
+
+announcement = 1
+emoji = 1
+avatar = 1
+
+inbox_stat = 1
+multi_quote = 1
+
+conversation = 1
+
+mod_approve = 1
+mod_delete = 1
+inappreg = 1
+advanced_delete = 1
+anonymous = 1
+advanced_search = 1
+searchid = 1
+alert = 1
+push_type = conv,sub,like,quote,newtopic,tag
+push = 1
+ban_delete_type = none

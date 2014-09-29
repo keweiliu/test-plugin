@@ -1,0 +1,77 @@
+api_level = 4
+is_open = 1
+guest_okay = 1
+reg_url=register.php
+version=vb40_5.2.0
+
+hide_forum_id = 
+allowed_usergroup =
+forum_signature = 1
+support_md5 = 1
+allow_moderate = 1
+disable_bbcode = 0
+
+report_post = 1
+report_pm = 1
+
+goto_unread = 1
+goto_post = 1
+
+mark_read = 1
+mark_forum = 1
+
+no_refresh_on_post = 1
+subscribe_forum = 1
+disable_subscribe_forum = 0
+
+get_latest_topic = 1
+get_id_by_url = 1
+
+delete_reason = 1
+ban_delete_type = soft_delete
+mod_approve = 1
+mod_delete = 1
+mod_report = 0
+announcement = 1
+anonymous = 1
+pm_load = 1
+subscribe_load = 1
+mass_subscribe = 1
+emoji = 1
+emoji_support = 1
+searchid = 1
+avatar = 1
+multi_quote = 1
+inbox_stat = 1
+user_id = 1
+prefix_edit = 1
+// supported level 4 functions
+get_forum = 1
+get_forum_status = 1
+get_topic_status = 1
+get_participated_forum = 1
+get_smilies = 1
+get_online_users = 1
+mark_topic_read = 1
+mark_pm_unread = 1
+advanced_search = 1
+push = 1
+alert = 1
+push_type = quote,tag,newtopic,pm,sub
+direct_unsubscribe = 1
+user_recommended = 1
+ignore_user = 1
+search_user = 1
+m_approve = 1
+m_delete = 1
+advanced_delete = 1
+sign_in = 1
+inappreg = 1
+sso_login = 1
+sso_signin = 1
+sso_register = 1
+native_register = 1
+advanced_edit = 1
+ban_expires = 1
+get_contact = 1
+advanced_reg = 1

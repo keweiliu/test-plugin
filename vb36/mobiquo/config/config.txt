@@ -1,0 +1,17 @@
+version=vb36_3.2.0
+api_level=3
+is_open=1
+guest_okay=1
+reg_url=register.php
+
+suffix=
+hide_forum_id=
+allowed_usergroup=
+
+disable_search=0
+disable_latest=0
+
+allow_moderate=1
+disable_bbcode=0
+mark_forum=1
+mark_read=1

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="tapatalk_id_bridge" title="Tapatalk ID Bridge" version_string="1.0" version_id="1" url="" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="TapatalkIDBridge_EventListeners_LoadClassController" callback_method="controller" active="1" description="Load event control public"/>
+    <listener event_id="load_class_model" execute_order="1" callback_class="TapatalkIDBridge_EventListeners_LoadClassModel" callback_method="loadClassListener" active="1" description="User Model Listener"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases/>
+  <route_prefixes/>
+  <style_properties/>
+  <templates/>
+  <bb_code_media_sites/>
+</addon>

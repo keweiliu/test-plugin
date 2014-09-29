@@ -1,0 +1,21 @@
+IPBoard 3.4+ ,Plugin Version 3.3.4 Released:
+This plugin only support for IPB 3.4+ version.
+1.fix multi-word search issue;
+2.improvement:get participated topic should return latest post short content,not the first post;
+3.fixed bug:get participated topic did not return correct reply number;
+4.fixed bug:can not correctly return unread topic mark when get participated topic;
+5.improve quote/multi-quote feature;
+6.improve detect js;
+7.fixed some content format issues between different ipb 3.4.* versions and mobile device types when posting,replying,quoting/multi-quoting and editing;
+8.fixed bug:no new content since used tapatalk;
+9.improve content display;
+10.fix some other issues;
+
+
+Important Note:
+1.If your old tapatalk plugin version is lower/older than 3.3.3 then you must uninstall the old tapatalk hook in backend Applications & Modules > Manage Hooks page,and then install the new tapatalk hook into your site,and use the new mobiquo folder to replace the old mobiquo folder;
+
+Supprot Forum:
+http://support.tapatalk.com/forums/ipboard-discussion.56/
+
+2013-03-22

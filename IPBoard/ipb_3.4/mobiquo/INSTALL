@@ -1,0 +1,11 @@
+
+Tapatalk Mod for IPBoard 3.4.* installation
+
+ - Upload directory 'mobiquo/' which contains this file to your forum root
+ - Check the file permission and make sure the php files inside the mobiquo directory are accessible (normally the file permission should be 755)
+ - Install tapatalk.xml in your forum Admin CP at 'System' -> 'Applications & Modules' -> 'Manage Hooks'
+
+
+More actions you may need to do
+ - Go back to Tapatalk forum owner area to complete your forum register in tapatalk network.
+ - Verify the mod installation in tapatalk forum owner area, after that app users can find and visit your forum in Tapatalk App.

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+    <name>Tapatalk SMF 2.0 RC3 Plugin</name>
+    <id>Tapatalk:TapatalkDevelopmentTeam</id>
+    <version>2.0.0</version>
+    <homepage>http://www.tapatalk.com</homepage>
+    <type>modification</type>
+    <install>
+        <require-dir name="mobiquo" destination="$boarddir" />
+        <modification>install.xml</modification>
+        <readme type="file" parsebbc="true">readme.txt</readme>
+    </install>
+    <uninstall>
+        <remove-dir name="mobiquo" destinatin="$boarddir" />
+        <modification reverse="true">install.xml</modification>
+    </uninstall>
+</package-info>
