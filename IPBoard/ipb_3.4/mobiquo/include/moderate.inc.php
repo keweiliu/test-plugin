@@ -3187,7 +3187,8 @@ class tapatalk_moderate extends ipsCommand
             $this->DB->update( 'posts', array( 'queued' => 1 ), 'topic_id IN (' . implode( ",", $unapproved ) . ")" );
         }
 
-        $this->DB->update( 'posts', array( 'topic_id' => $main_topic_id ), 'topic_id IN (' . implode( ",", $merge_ids ) . ")" );
+        $this->DB->update( 'posts', array( 'topic_id' => $main_topic_id, 'new_topic' => 0 ), 'topic_id IN (' . implode( ",", $merge_ids ) . ")" );
+        //$this->DB->update( 'posts', array( 'topic_id' => $main_topic_id ), 'topic_id IN (' . implode( ",", $merge_ids ) . ")" );
         $this->DB->update( 'topics', array( 'views' => $newViews ), 'tid=' . $main_topic_id );
         $this->DB->delete( 'voters', "tid IN (" . implode( ",", $merge_ids ) . ")" );
         $this->DB->delete( 'topics', "tid IN (" . implode( ",", $merge_ids ) . ")" );

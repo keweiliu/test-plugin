@@ -159,6 +159,7 @@ class topic_thread extends public_forums_forums_topics
                 }
 
                 unset($data['cache_content']);
+                //$data['cache_content'] = $data['post'];
                 $postData[ $pid ] = $this->parsePostRow( $data );
                 IPSContentCache::update($pid, 'post', false);
             }

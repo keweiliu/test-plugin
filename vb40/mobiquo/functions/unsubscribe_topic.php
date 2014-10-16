@@ -29,7 +29,7 @@ function unsubscribe_topic_func($xmlrpc_params)
     if(strpos($params[0], 's_') !== false)
     {
         $subsc_id_temp = explode('_', $params[0]);
-        $subsc_id = isset($subsc_id_temp[1]) ? $subsc_id_temp[1] : '';
+        $subsc_id = isset($subsc_id_temp[1]) ? intval($subsc_id_temp[1]) : '';
         if(empty($subsc_id)) return_fault('invalid subscribe id');
         $substable = 'subscribe' . 'thread';
         $idfield = $substable . 'id';

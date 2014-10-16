@@ -793,9 +793,9 @@ class tapatalk_search extends public_core_search_search
                     $preview = $result['post'];
                 }
                 
-                $preview = $parser->stripQuotes( $preview );
-                $preview = $parser->display( $preview );
-                $preview = IPSText::truncate( IPSText::getTextClass( 'bbcode' )->stripAllTags( strip_tags( $preview, '<br>' ) ), 500 );
+                $preview = preHtmlToBBCode($preview);
+                $preview = $parser->HtmlToBBCode( $preview );
+                $preview = IPSText:: br2nl($preview);
                 $result['preview'] = $preview;
             }
         }

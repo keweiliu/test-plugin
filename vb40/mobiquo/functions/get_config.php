@@ -41,7 +41,7 @@ $globaltemplates = array(
     'forumhome_birthdaybit'
 );
 
-require_once('./global.php');
+require_once(SCRIPT_ROOT . '/global.php');
 require_once(DIR . '/includes/functions_bigthree.php');
 require_once(DIR . '/includes/functions_forumlist.php');
 

@@ -7,6 +7,10 @@ function dbTTL($return_post, $post, $forumid, $varname, $can, $is, $count, $info
 {
     global $vbulletin;
 
+    if(!function_exists('THANKS::checkPermissions'))
+    {
+        $nocan = true;
+    }
     // get the button info, maybe can't use in this thread/forum
     foreach (THANKS::$cache['button'] as $button)
     {
@@ -26,7 +30,7 @@ function dbTTL($return_post, $post, $forumid, $varname, $can, $is, $count, $info
     if(!$button['varname'] || $button['varname'] != $varname)
         return($return_post);
 
-    if (!THANKS::checkPermissions($vbulletin->userinfo, $button['permissions'], 'canclick'))
+    if (!$nocan && !THANKS::checkPermissions($vbulletin->userinfo, $button['permissions'], 'canclick'))
         $nocan = true;
 
     $foruminfo = $vbulletin->forumcache[$forumid];
@@ -61,7 +65,7 @@ function dbTTL($return_post, $post, $forumid, $varname, $can, $is, $count, $info
         $nocan = true;
 
     // If thread already liked but NO unlike permission, then hide the 'unlike' button
-    if (is_array(THANKS::$entrycache['data'][$post['postid']][$varname][$vbulletin->userinfo['userid']]) && !THANKS::checkPermissions($vbulletin->userinfo, $button['permissions'], 'canunclick'))
+    if (is_array(THANKS::$entrycache['data'][$post['postid']][$varname][$vbulletin->userinfo['userid']]) && !$nocan && !THANKS::checkPermissions($vbulletin->userinfo, $button['permissions'], 'canunclick'))
         $nocan = true;
 
     if ($post['userid'] != $vbulletin->userinfo['userid'] && $can && !$nocan && $vbulletin->userinfo['userid'])

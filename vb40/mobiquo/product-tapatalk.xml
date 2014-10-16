@@ -3,7 +3,7 @@
 <product productid="tapatalk" active="1">
 	<title>Tapatalk</title>
 	<description>Tapatalk mobile app plugin for vb4.</description>
-	<version>5.2.0</version>
+	<version>5.2.2</version>
 	<url>https://tapatalk.com</url>
 	<versioncheckurl>https://tapatalk.com/vb4.php</versioncheckurl>
 	<dependencies>
@@ -267,6 +267,9 @@ $postbits = preg_replace('#<a [^>]*?href="https?://(www\.)?vimeo\.com/(\d+)"[^>]
 		</phrasetype>
 		<phrasetype name="Error Messages" fieldname="error">
 			<phrase name="email_mark_as_spam" date="1395480010" username="admin" version="4.9.1"><![CDATA[Your email is marked as spam.]]></phrase>
+			<phrase name="mb_no_permission_access" date="1395480010" username="admin" version="5.2.1"><![CDATA[You do not have permission to access this forum.]]></phrase>
+			<phrase name="mb_invalid_login_striks" date="1395480010" username="admin" version="5.2.1"><![CDATA[You have entered an invalid username or password. Please enter the correct details and try again. Don't forget that the password is case sensitive. You have used {1}s out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes]]></phrase>
+			<phrase name="mb_invalid_login" date="1395480010" username="admin" version="5.2.1"><![CDATA[You have entered an invalid username or password.]]></phrase>
 		</phrasetype>
 		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
 			<phrase name="setting_tapatalk_ads_desc" date="1410424747" username="admin" version="5.0.1"><![CDATA[This option enables you to specify user groups to be excluded from being served advertising. Each user group name should be separated by a comma, for example, "3,11,6" which means only users who belong to groups 3,6 and 11 will not be shown ads.]]></phrase>
@@ -297,10 +300,7 @@ No SSO available for Facebook users. All users must register for the forum via a
 			<phrase name="setting_tapatalk_reg_type_title" date="1392283732" username="admin" version="4.9.0"><![CDATA[Registration Options]]></phrase>
 			<phrase name="setting_tapatalk_reg_ug_desc" date="1392283579" username="admin" version="4.9.0"><![CDATA[You can assign users registered with Tapatalk to specific user groups(filling usergroup id). If you do not assign them to a specific group, they will be assigned a default group.]]></phrase>
 			<phrase name="setting_tapatalk_reg_ug_title" date="1392283579" username="admin" version="4.9.0"><![CDATA[User Group Assignment]]></phrase>
-			<phrase name="setting_tp_allow_usergroup_desc" date="1363688918" username="admin" version="4.4.0"><![CDATA[To allow all user groups to login via Tapatalk, leave this field empty. To allow only certain user groups to login via Tapatalk, specify them in this field. Each user group name should be separated with a comma. For example, entering "3,11,6" (without quotes) would allow users from user groups 3, 11, and 6 to be able to login via Tapatalk.]]></phrase>
-			<phrase name="setting_tp_allow_usergroup_title" date="1363688918" username="admin" version="4.4.0"><![CDATA[Allow User Groups to Login via Tapatalk]]></phrase>
 			<phrase name="setting_tp_app_android_url_desc" date="1365757508" username="admin" version="4.4.0"><![CDATA[Enter your BYO App Product ID from Google Play, to be used on Android device]]></phrase>
-			<phrase name="setting_tp_app_android_url_title" date="1365757508" username="admin" version="4.4.0"><![CDATA[Android Product ID]]></phrase>
 			<phrase name="setting_tp_app_banner_message_desc" date="1365757786" username="admin" version="4.4.0"><![CDATA[E.g. "Follow {your_forum_name} with {app_name} for [os_platform]". Do not change the [os_platform] tag as it is displayed dynamically based on user's device platform.]]></phrase>
 			<phrase name="setting_tp_app_banner_message_title" date="1365757786" username="admin" version="4.4.0"><![CDATA[BYO App Banner Message]]></phrase>
 			<phrase name="setting_tp_app_ios_id_desc" date="1365758077" username="admin" version="4.4.0"><![CDATA[Enter your product ID in Apple App Store, to be used on iPhone device]]></phrase>
@@ -379,9 +379,6 @@ $options = construct_forum_chooser_options(false, 'Show All');]]></optioncode>
 
 # Sample 2, replace [JAVA] BBCODE to [QUOTE] for better display in tapatalk
 # '/\[java\](.*?)\[\/java\]/si', '[quote]$1[/quote]']]></defaultvalue>
-			</setting>
-			<setting varname="tp_allow_usergroup" displayorder="46">
-				<datatype>free</datatype>
 			</setting>
 			<setting varname="tapatalk_ads" displayorder="76">
 				<datatype>free</datatype>

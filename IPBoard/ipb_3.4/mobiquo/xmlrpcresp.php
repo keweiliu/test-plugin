@@ -91,7 +91,7 @@ function advanced_search_func()
                 'user_type'         => new xmlrpcval(check_return_user_type($item), 'base64'),
                 // first match post id
                 // 'post_id'           => new xmlrpcval($item['pid'], 'string'),
-                'short_content'     => new xmlrpcval(preview_clean($item['preview']), 'base64'),
+                'short_content'     => new xmlrpcval(get_short_content($item['preview'],0,500), 'base64'),
                 
                 'reply_number'      => new xmlrpcval(intval($item['posts']), 'int'),
                 'view_number'       => new xmlrpcval(intval($item['views']), 'int'),
@@ -139,7 +139,7 @@ function advanced_search_func()
                 'post_author_name'  => new xmlrpcval(subject_clean($item['author_name']), 'base64'),
                 'icon_url'          => new xmlrpcval($item['pp_main_photo'] , 'string'),
                 'user_type'         => new xmlrpcval(check_return_user_type($item), 'base64'),
-                'short_content'     => new xmlrpcval(preview_clean($item['preview']), 'base64'),
+                'short_content'     => new xmlrpcval(get_short_content($item['preview'],0,500), 'base64'),
                 
                 'is_approved'       => new xmlrpcval($item['_p_isVisible'], 'boolean'),
                 'is_deleted'        => new xmlrpcval($item['_p_isDeleted'], 'boolean'),
@@ -266,6 +266,9 @@ function login_func()
             'max_attachment_size'=>new xmlrpcval($max_single_upload, 'int'),
             'max_png_size'      => new xmlrpcval($max_single_upload, 'int'),
             'max_jpg_size'      => new xmlrpcval($max_single_upload, 'int'),
+            'max_avatar_size'   => new xmlrpcval($member['photoMaxKb'], 'int'),
+            'max_avatar_width'  => new xmlrpcval($member['photoMaxWidth'], 'int'),
+            'max_avatar_height' => new xmlrpcval($member['photoMaxHeight'], 'int'),
             'can_upload_avatar' => new xmlrpcval(isset($settings['avatars_on']) ? $settings['avatars_on'] && $member['g_avatar_upload'] : IPSMember::canUploadPhoto($member), 'boolean'),
             'push_type'         => new xmlrpcval($push_type, 'array'),
             'post_countdown'    => new xmlrpcval($member['g_avoid_flood'] ? 0 : $settings['flood_control'], 'int'),

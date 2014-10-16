@@ -2,7 +2,7 @@ api_level = 4
 is_open = 1
 guest_okay = 1
 reg_url=register.php
-version=vb40_5.2.0
+version=vb40_5.2.2
 
 hide_forum_id = 
 allowed_usergroup =
@@ -75,3 +75,4 @@ advanced_edit = 1
 ban_expires = 1
 get_contact = 1
 advanced_reg = 1
+login_type = username

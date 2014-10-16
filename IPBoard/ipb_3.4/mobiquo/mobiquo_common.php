@@ -216,11 +216,26 @@ function get_avatar($member)
     static $avatar = array();
 
     $id = is_array($member) ? $member['member_id'] : $member;
-
+    if ( ! is_array( $member ) AND ( $member == intval( $member ) ) AND $member > 0 )
+    {
+        $member = IPSMember::load( $member, 'extendedProfile' );
+    }
+    else if ( $member == 0 )
+    {
+        $member = array();
+    }
+    
     if (isset($avatar[$id]))
         return $avatar[$id];
     else
-    {
+    {        
+        /* No photo? Per this bug report, we're going to force showing profile photos, rather than hide them if you can't view profiles
+            @link http://community.invisionpower.com/tracker/issue-30986-board-index-unregistered-guests-can-not-view-avatars-option-removed-from-acp */
+        if ( empty( $member['pp_main_photo'] ) or $member['pp_photo_type'] == 'gravatar' /*OR ! ipsRegistry::member()->getProperty('g_mem_info')*/ )
+        {
+            return '';
+        }
+        
         $url = IPSMember::buildAvatar($member);
         if (preg_match('/<img src=\'(.*?)\'/si', $url, $match)) {
             $avatar[$id] = $match[1];
@@ -1252,8 +1267,6 @@ function tt_register_verify($tt_token, $tt_code)
     
     if ($result->result_text == 'Invalid forum key.')
         $result->result_text = 'Sorry, this community has not yet full configured to work with Tapatalk, this feature has been disabled.';
-    else if ($result->result_text != "Your Tapatalk ID hasn't be activated.")
-        $result->result_text = 'Tapatalk ID session expired, please re-login Tapatalk ID and try again, if the problem persist please tell us.';
     
     return $result;
 }
@@ -1324,6 +1337,10 @@ function cleanPost( $t , $allow_unicode = false)
     }
     
     $t = preg_replace( "/\\\(?!&amp;#|\?#)/", "&#092;", $t ); 
+    
+    //here we parse [url] to html because IPB cannot parse the urls without http/https/new/ftp
+    $t = preg_replace("/\[url\](.*?)\[\/url\]/si","[url=$1]$1[/url]",$t);
+    $t = preg_replace("/\[url=(.*?)\](.*?)\[\/url\]/si","<a data-cke-saved-href='$1' href='$1'>$2</a>",$t);
     
     return $t;
 }

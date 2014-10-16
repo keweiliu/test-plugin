@@ -185,25 +185,6 @@ You have used %3s out of 5 login attempts. After all 5 have been used, you will 
                 
                 $mobiquo_userinfo = mobiquo_verify_id('user', $vbulletin->userinfo['userid'], 0, 1, $fetch_userinfo_options);
 
-                //generate usergroups
-                $usergroupstr = $mobiquo_userinfo['usergroupid'];
-                if(isset($mobiquo_userinfo['membergroupids']) && !empty($mobiquo_userinfo['membergroupids']))
-                    $usergroupstr .= ','.$mobiquo_userinfo['membergroupids'];
-                $usergroups = explode(',', $usergroupstr);
-                //check allow usergroup
-                if(isset($vbulletin->options['tp_allow_usergroup']) && !empty($vbulletin->options['tp_allow_usergroup']))
-                {
-                    $allow_tapatalk = false;
-                    $allow_usergroups = explode(',', $vbulletin->options['tp_allow_usergroup']);
-                    foreach($usergroups as $group_id)
-                    {
-                        if(in_array($group_id, $allow_usergroups))
-                            $allow_tapatalk = true;
-                    }
-                    if(!$allow_tapatalk)
-                        return return_fault('You are not allowed to login via Tapatalk, please contact your forum administrator.');
-                }
-                
                 if ($vbulletin->userinfo['userid'] AND $vbulletin->userinfo['permissions']['passwordexpires'])
                 {
                     $passworddaysold = floor((TIMENOW - $mobiquo_userinfo['passworddate']) / 86400);

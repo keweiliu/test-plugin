@@ -45,7 +45,7 @@ $is_byo = $app_ios_id && $app_ios_id != -1 || $app_android_id && $app_android_id
 
 // add App Indexing for Google Search
 $host_path = preg_replace('#tapatalk://#si', '', $app_location_url);
-if (in_array($page_type, array('topic', 'post')) && $host_path)
+if (in_array($page_type, array('topic', 'post', 'home')) && $host_path)
 {
     if ($app_android_id == $app_android_id_default || empty($app_android_id) || $app_android_id == -1)
     {
@@ -64,7 +64,6 @@ if (in_array($page_type, array('topic', 'post')) && $host_path)
         <meta property="al:ios:url" content="'.$app_location_url.'" />
         <meta property="al:ios:app_store_id" content="'.$app_ios_id_default.'" />
         <meta property="al:ios:app_name" content="Tapatalk" />
-        <meta property="al:web:should_fallback" content="false" />
         ';
     }
 }
@@ -104,16 +103,14 @@ if ($app_ios_id != -1 || $app_android_id != -1)
 
 $app_head_include .= $twitter_card_head;
 
-
 // don't include it when the request was not from mobile device
 $useragent = tt_getenv('HTTP_USER_AGENT');
 if (!preg_match('/iPhone|iPod|iPad|Silk|Android|IEMobile|Windows Phone|Windows RT.*?ARM/i', $useragent))
     return;
 
-// don't show welcome page and banner for googlebot
+// don't show welcome page and banner for googlebot or twitterbot
 if (preg_match('/googlebot|twitterbot/i', $useragent))
     return;
-
 
 // display smart banner and welcome page
 $app_banner_head = '';

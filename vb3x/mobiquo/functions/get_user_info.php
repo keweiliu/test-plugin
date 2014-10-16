@@ -224,14 +224,14 @@ function get_user_info_func($xmlrpc_params)
 //        'title' => $vbphrase['contact_info'],
 //    ),
 //
-//    'infractions' => array(
-//        'class'   => 'Infractions',
-//        'title'   => $vbphrase['infractions'],
-//        'options' => array(
-//            'pagenumber' => $vbulletin->GPC['pagenumber'],
-//            'tab'        => $vbulletin->GPC['tab'],
-//    ),
-//    ),
+    'infractions' => array(
+        'class'   => 'Infractions',
+        'title'   => $vbphrase['infractions'],
+        'options' => array(
+            'pagenumber' => $vbulletin->GPC['pagenumber'],
+            'tab'        => $vbulletin->GPC['tab'],
+    ),
+    ),
     );
 
     if (!empty($vbulletin->GPC['tab']) AND !empty($vbulletin->GPC['perpage']) AND isset($blocklist["{$vbulletin->GPC['tab']}"]))
@@ -285,6 +285,20 @@ function get_user_info_func($xmlrpc_params)
                         'value' => new xmlrpcval(mobiquo_encode($mobiquo_block_item[value]), 'base64')
                     ), 'struct');
                 }
+            }
+        }
+        else if($blockid == 'infractions')
+        {
+            if(is_array($mobiquo_block_array)){
+                $infractions_points = 0;
+                foreach($mobiquo_block_array as $idx => $infraction)
+                {
+                    $infractions_points += $infraction['points'];
+                }
+                $mobiquo_return_array[] = new xmlrpcval(array(
+                        'name' => new xmlrpcval(mobiquo_encode('Infractions'), 'base64'),
+                        'value' => new xmlrpcval(mobiquo_encode($infractions_points), 'base64')
+                    ), 'struct');
             }
         }
     }

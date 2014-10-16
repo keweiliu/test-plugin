@@ -322,8 +322,6 @@ No SSO available for Facebook users. All users must register for the forum via a
 			<phrase name="setting_tapatalk_reg_type_title" date="1392283732" username="admin" version="4.3.1"><![CDATA[Registration Options]]></phrase>
 			<phrase name="setting_tapatalk_reg_ug_desc" date="1392283579" username="admin" version="4.3.1"><![CDATA[You can assign users registered with Tapatalk to specific user groups(filling usergroup id). If you do not assign them to a specific group, they will be assigned a default group.]]></phrase>
 			<phrase name="setting_tapatalk_reg_ug_title" date="1392283579" username="admin" version="4.3.1"><![CDATA[User Group Assignment]]></phrase>
-			<phrase name="setting_tp_allow_usergroup_desc" date="1363775386" username="admin" version="3.7.2"><![CDATA[To allow all user groups to login via Tapatalk, leave this field empty. To allow only certain user groups to login via Tapatalk, specify them in this field. Each user group name should be separated with a comma. For example, entering "3,11,6" (without quotes) would allow users from user groups 3, 11, and 6 to be able to login via Tapatalk.]]></phrase>
-			<phrase name="setting_tp_allow_usergroup_title" date="1363775386" username="admin" version="3.7.2"><![CDATA[Allow User Groups to Login via Tapatalk]]></phrase>
 			<phrase name="setting_tp_app_android_url_desc" date="1366702311" username="admin" version="3.8.0"><![CDATA[Enter your BYO App URL from Google Play, to be used on Android device]]></phrase>
 			<phrase name="setting_tp_app_android_url_title" date="1366702311" username="admin" version="3.8.0"><![CDATA[Android Product URL]]></phrase>
 			<phrase name="setting_tp_app_banner_message_desc" date="1366702228" username="admin" version="3.8.0"><![CDATA[E.g. "Follow {your_forum_name} with {app_name} for [os_platform]". Do not change the [os_platform] tag as it is displayed dynamically based on user's device platform.]]></phrase>
@@ -392,9 +390,7 @@ No SSO available for Facebook users. All users must register for the forum via a
 # Sample 2, replace [JAVA] BBCODE to [QUOTE] for better display in tapatalk
 # '/\[java\](.*?)\[\/java\]/si', '[quote]$1[/quote]']]></defaultvalue>
 			</setting>
-			<setting varname="tp_allow_usergroup" displayorder="36">
-				<datatype>free</datatype>
-			</setting>
+
 			<setting varname="tapatalk_ads" displayorder="76">
 				<datatype>free</datatype>
 			</setting>

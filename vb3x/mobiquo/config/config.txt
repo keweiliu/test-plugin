@@ -50,3 +50,4 @@ advanced_edit = 1
 ban_expires = 1
 get_contact = 1
 advanced_reg = 1
+login_type = username

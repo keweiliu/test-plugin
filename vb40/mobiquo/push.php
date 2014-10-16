@@ -40,14 +40,14 @@ if (!is_object($vbulletin->db))
         {
             $output .= 'Failed</b><br /> Please set Tapatalk API Key at forum option/setting <br />';
         }
-        $ip =  do_post_request(array('ip' => 1), true);
+        //$ip =  do_post_request(array('ip' => 1), true);
         $forum_url =  get_forum_path();
 
         $result = $vbulletin->db->query_first("SHOW TABLES LIKE '" . TABLE_PREFIX . "tapatalk_users'");
         $table_exist = empty($result) ? 'No' : 'Yes';
     
         $output .="<br>Current forum url: ".$forum_url."<br>";
-        $output .="Current server IP: ".$ip."<br>";
+        //$output .="Current server IP: ".$ip."<br>";
         $output .="Tapatalk user table existence:".$table_exist."<br>";
         $query = "SELECT title as push_slug FROM ". TABLE_PREFIX . "tapatalk_push  WHERE userid = 0 LIMIT 1 ";
         $results = $vbulletin->db->query_read_slave($query);

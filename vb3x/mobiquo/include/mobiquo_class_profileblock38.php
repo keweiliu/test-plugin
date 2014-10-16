@@ -635,3 +635,262 @@ class vB_ProfileBlock_AboutMe extends vB_ProfileBlock
 		$this->block_data['fields'] = $blockobj->block_data['fields'];
 	}
 }
+
+class vB_ProfileBlock_Infractions extends vB_ProfileBlock
+{
+	/**
+	* The name of the template to be used for the block
+	*
+	* @var string
+	*/
+	var $template_name = 'memberinfo_block_infractions';
+    var $auto_prepare = array(
+        'signature',
+        'profileurl'
+        );
+
+        var $nowrap = true;
+
+	/**
+	* Sets/Fetches the default options for the block
+	*
+	*/
+	function fetch_default_options()
+	{
+		$this->option_defaults = array(
+			'pagenumber'	=> 1,
+		);
+	}
+
+	/**
+	* Whether to return an empty wrapper if there is no content in the blocks
+	*
+	* @return bool
+	*/
+	function confirm_empty_wrap()
+	{
+		return false;
+	}
+
+	/**
+	* Whether or not the block is enabled
+	*
+	* @return bool
+	*/
+	function block_is_enabled($id)
+	{
+		if (
+			!($this->registry->userinfo['permissions']['genericpermissions'] & $this->registry->bf_ugp_genericpermissions['canreverseinfraction'])
+		AND
+			!($this->registry->userinfo['permissions']['genericpermissions'] & $this->registry->bf_ugp_genericpermissions['cangiveinfraction'])
+		AND
+			$this->profile->userinfo['userid'] != $this->registry->userinfo['userid']
+		)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	/**
+	* Should we actually display anything?
+	*
+	* @return	bool
+	*/
+	function confirm_display()
+	{
+		return true;
+	}
+
+	/**
+	* Prepare any data needed for the output
+	*
+	* @param	string	The id of the block
+	* @param	array	Options specific to the block
+	*/
+	function prepare_output($id = '', $options = array())
+	{
+		global $show, $vbphrase;
+
+		$show['infractions'] = false;
+
+		//($hook = vBulletinHook::fetch_hook('member_infraction_start')) ? eval($hook) : false;
+
+		$perpage = $options['perpage'];
+		$pagenumber = $options['pagenumber'];
+
+		$totalinfractions = $this->registry->db->query_first_slave("
+			SELECT COUNT(*) AS count
+			FROM " . TABLE_PREFIX . "infraction AS infraction
+			LEFT JOIN " . TABLE_PREFIX . "post AS post ON (infraction.postid = post.postid)
+			LEFT JOIN " . TABLE_PREFIX . "thread AS thread ON (post.threadid = thread.threadid)
+			WHERE infraction.userid = " . $this->profile->userinfo['userid'] . "
+		");
+
+		if ($totalinfractions['count'])
+		{
+			if (!$pagenumber OR ($options['tab'] != $id))
+			{
+				$pagenumber = 1;
+			}
+
+			// set defaults
+			sanitize_pageresults($totalinfractions['count'], $pagenumber, $perpage, 100, 5);
+			$limitlower = ($pagenumber - 1) * $perpage + 1;
+			$limitupper = $pagenumber * $perpage;
+			if ($limitupper > $totalinfractions['count'])
+			{
+				$limitupper = $totalinfractions['count'];
+				if ($limitlower > $totalinfractions['count'])
+				{
+					$limitlower = $totalinfractions['count'] - $perpage;
+				}
+			}
+			if ($limitlower <= 0)
+			{
+				$limitlower = 1;
+			}
+
+			if ($this->profile->userinfo['userid'] != $this->registry->userinfo['userid'] AND $this->registry->userinfo['permissions']['genericpermissions'] & $this->registry->bf_ugp_genericpermissions['canreverseinfraction'])
+			{
+				$show['reverse'] = true;
+			}
+
+			require_once(DIR . '/includes/class_bbcode.php');
+			$bbcode_parser = new vB_BbCodeParser($this->registry, fetch_tag_list());
+
+			$infractions = $this->registry->db->query_read_slave("
+				SELECT infraction.*, thread.title, thread.threadid, user.username, thread.visible AS thread_visible, post.visible,
+					forumid, postuserid, IF(ISNULL(post.postid) AND infraction.postid != 0, 1, 0) AS postdeleted
+				FROM " . TABLE_PREFIX . "infraction AS infraction
+				LEFT JOIN " . TABLE_PREFIX . "post AS post ON (infraction.postid = post.postid)
+				LEFT JOIN " . TABLE_PREFIX . "thread AS thread ON (post.threadid = thread.threadid)
+				INNER JOIN " . TABLE_PREFIX . "user AS user ON (infraction.whoadded = user.userid)
+				WHERE infraction.userid = " . $this->profile->userinfo['userid'] . "
+				ORDER BY infraction.dateline DESC
+				LIMIT " . ($limitlower - 1) . ", $perpage
+			");
+			while ($infraction = $this->registry->db->fetch_array($infractions))
+			{
+				$show['expired'] = $show['reversed'] = $show['neverexpires'] = false;
+				$card = ($infraction['points'] > 0) ? 'redcard' : 'yellowcard';
+				$infraction['timeline'] = vbdate($this->registry->options['timeformat'], $infraction['dateline']);
+				$infraction['dateline'] = vbdate($this->registry->options['dateformat'], $infraction['dateline']);
+				switch($infraction['action'])
+				{
+					case 0:
+						if ($infraction['expires'] != 0)
+						{
+							$infraction['expires_timeline'] = vbdate($this->registry->options['timeformat'], $infraction['expires']);
+							$infraction['expires_dateline'] = vbdate($this->registry->options['dateformat'], $infraction['expires']);
+							$show['neverexpires'] = false;
+						}
+						else
+						{
+							$show['neverexpires'] = true;
+						}
+						break;
+					case 1:
+						$show['expired'] = true;
+						break;
+					case 2:
+						$show['reversed'] = true;
+						break;
+				}
+
+				$infraction['threadtitle'] = vbstrlen($infraction['title']) > 25 ? fetch_trimmed_title($infraction['title'], 24) : $infraction['title'];
+				$infraction['reason'] = !empty($vbphrase['infractionlevel' . $infraction['infractionlevelid'] . '_title']) ? $vbphrase['infractionlevel' . $infraction['infractionlevelid'] . '_title'] : ($infraction['customreason'] ? $infraction['customreason'] : $vbphrase['n_a']);
+
+				$show['threadtitle'] = true;
+				$show['postdeleted'] = false;
+				if ($infraction['postid'] != 0)
+				{
+					if ($infraction['postdeleted'])
+					{
+						$show['postdeleted'] = true;
+					}
+					else if ((!$infraction['visible'] OR !$infraction['thread_visible']) AND !can_moderate($infraction['forumid'], 'canmoderateposts'))
+					{
+						$show['threadtitle'] = false;
+					}
+					else if (($infraction['visible'] == 2 OR $infraction['thread_visible'] == 2) AND !can_moderate($infraction['forumid'], 'candeleteposts'))
+					{
+						$show['threadtitle'] = false;
+					}
+					else
+					{
+						$forumperms = fetch_permissions($infraction['forumid']);
+						if (!($forumperms & $this->registry->bf_ugp_forumpermissions['canview']))
+						{
+							$show['threadtitle'] = false;
+						}
+						if (!($forumperms & $this->registry->bf_ugp_forumpermissions['canviewothers']) AND ($infraction['postuserid'] != $this->registry->userinfo['userid'] OR $this->registry->userinfo['userid'] == 0))
+						{
+							$show['threadtitle'] = false;
+						}
+					}
+				}
+
+				//($hook = vBulletinHook::fetch_hook('member_infractionbit')) ? eval($hook) : false;
+
+				$threadinfo = array(
+					'threadid' => $infraction['threadid'],
+					'title'    => $infraction['title'],
+				);
+				$pageinfo = array('p' => $infraction['postid']);
+				$memberinfo = array('userid' => $infraction['whoadded'], 'username' => $infraction['username']);
+                $infractions_arr[] = $infraction;
+				$templater = vB_Template::create('memberinfo_infractionbit');
+					$templater->register('card', $card);
+					$templater->register('infraction', $infraction);
+					$templater->register('memberinfo', $memberinfo);
+					$templater->register('pageinfo', $pageinfo);
+					$templater->register('threadinfo', $threadinfo);
+				$infractionbits .= $templater->render();
+			}
+			unset($bbcode_parser);
+
+			$pageinfo_pagenav = array(
+				'tab' => $id
+			);
+			if ($options['perpage'])
+			{
+				$pageinfo_pagenav['pp'] = $options['perpage'];
+			}
+
+			$this->block_data['pagenav'] = construct_page_nav(
+				$pagenumber,
+				$perpage,
+				$totalinfractions['count'],
+				'',
+				'',
+				$id,
+				'member',
+				$this->profile->userinfo,
+				$pageinfo_pagenav
+			);
+
+			$this->block_data['infractionbits'] = $infractionbits;
+		}
+        $this->mobiquo_array =  $infractions_arr;
+		$show['giveinfraction'] = (
+				// Must have 'cangiveinfraction' permission. Branch dies right here majority of the time
+				$this->registry->userinfo['permissions']['genericpermissions'] & $this->registry->bf_ugp_genericpermissions['cangiveinfraction']
+				// Can not give yourself an infraction
+				AND $this->profile->userinfo['userid'] != $this->registry->userinfo['userid']
+				// Can not give an infraction to a post that already has one
+				// Can not give an admin an infraction
+				AND !($this->profile->userinfo['permissions']['adminpermissions'] & $this->registry->bf_ugp_adminpermissions['cancontrolpanel'])
+				// Only Admins can give a supermod an infraction
+				AND (
+					!($this->profile->userinfo['permissions']['adminpermissions'] & $this->registry->bf_ugp_adminpermissions['ismoderator'])
+					OR $this->registry->userinfo['permissions']['adminpermissions'] & $this->registry->bf_ugp_adminpermissions['cancontrolpanel']
+				)
+			);
+
+		//($hook = vBulletinHook::fetch_hook('member_infraction_complete')) ? eval($hook) : false;
+	}
+}
