@@ -1,5 +1,5 @@
 api_level = 3
-version = pb31_1.0.0
+version = pb31_0.0.1
 is_beta = 1
 is_open = 1
 guest_okay = 1
