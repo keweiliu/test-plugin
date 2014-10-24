@@ -1,4 +1,4 @@
-version=vb3x_4.6.0
+version=vb3x_0.0.2
 api_level=3
 is_open=1
 guest_okay=1
