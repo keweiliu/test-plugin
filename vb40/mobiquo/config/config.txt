@@ -2,7 +2,7 @@ api_level = 4
 is_open = 1
 guest_okay = 1
 reg_url=register.php
-version=vb40_5.2.2
+version=vb40_0.0.2
 
 hide_forum_id = 
 allowed_usergroup =
