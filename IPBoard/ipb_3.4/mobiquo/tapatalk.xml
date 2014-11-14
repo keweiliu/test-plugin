@@ -9,8 +9,8 @@
       <hook_website>https://tapatalk.com/activate_tapatalk.php?plugin=ipb</hook_website>
       <hook_update_check>https://tapatalk.com/v.php?sys=ip34</hook_update_check>
       <hook_requirements><![CDATA[a:3:{s:21:"required_applications";a:1:{s:6:"forums";a:3:{s:8:"app_name";s:6:"Forums";s:11:"min_version";i:30007;s:11:"max_version";i:0;}}s:20:"hook_php_version_min";s:0:"";s:20:"hook_php_version_max";s:0:"";}]]></hook_requirements>
-      <hook_version_human>1.9.0</hook_version_human>
-      <hook_version_long>19000</hook_version_long>
+      <hook_version_human>1.9.1</hook_version_human>
+      <hook_version_long>19100</hook_version_long>
       <hook_extra_data><![CDATA[a:4:{s:7:"display";a:2:{s:8:"settings";s:463:"Setting groups: Tapatalk - General Settings, Tapatalk - In App Registration, Tapatalk BYO Settings<br />Settings: Advanced Delete Option, Android Product ID, BYO App Banner Message, BYO iOS App ID, Disable Ads for Group, Disable New Topic, Hide Forums, Kindle Fire Product URL, Mobile Welcome Screen, Registration Options, Registration URL, Spam Prevention, Tapatalk API Key, Tapatalk Plugin Directory, Thread Content Replacement (Advanced), User Group Assignment";s:8:"database";s:1348:"CREATE TABLE tapatalk_users (<br />
 										  `userid` int(10) NOT NULL,  `ann` tinyint(1) NOT NULL DEFAULT '1',  `conv` tinyint(1) NOT NULL DEFAULT '1',  `sub` tinyint(1) NOT NULL DEFAULT '1',  `like` tinyint(1) NOT NULL DEFAULT '1',  `quote` tinyint(1) NOT NULL DEFAULT '1',  `newtopic` tinyint(1) NOT NULL DEFAULT '1',  `tag` tinyint(1) NOT NULL DEFAULT '1',  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  PRIMARY KEY (`userid`)<br />
 										) ENGINE=myisam<br />CREATE TABLE tapatalk_push_data (<br />
