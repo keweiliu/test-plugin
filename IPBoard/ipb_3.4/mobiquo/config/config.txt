@@ -1,7 +1,7 @@
 api_level = 3
-version = ip34_0.0.3
-long_version = 19100
-  is_open = 1
+version = ip34_1.1.2
+long_version = 0
+      is_open = 1
 reg_url = index.php?app=core&module=global&section=register
 
 // If your forum have mod 'Hide Posts From Guests' installed, please turn on this field and set it to be 1
